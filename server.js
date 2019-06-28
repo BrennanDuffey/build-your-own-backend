@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 
-app.listen(port, () => {
+app.listen(process.env.NODE_ENV || port, () => {
   console.log(`App is running on ${port}`)
 });
 
