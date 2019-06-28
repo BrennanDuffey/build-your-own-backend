@@ -22,6 +22,14 @@ app.get('/api/v1/categories', (request, response) => {
     })
 });
 
+app.get('/', (request, response) => {
+  response.status(200).json('Hello World')
+})
+
+app.get('/favicon.ico', (request, response) => {
+  response.status(200).json('Hello World')
+})
+
 app.get('/api/v1/tossups', (request, response) => {
   database('tossups').select()
     .then(tossups => {
