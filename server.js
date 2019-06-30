@@ -22,12 +22,15 @@ app.get('/api/v1/categories', (request, response) => {
     })
 });
 
-app.get('/', (request, response) => {
-  response.status(200).json('Hello World')
-})
-
-app.get('/favicon.ico', (request, response) => {
-  response.status(200).json('Hello World')
+app.get('/api/v1/categories/:id', (request, response) => {
+  const { id } = request.params 
+  database('categories').select(id)
+    .then(category => {
+      response.status(200).json(category)
+    })
+    .catch(error => {
+      response.status(500).json(error)
+    })
 })
 
 app.get('/api/v1/tossups', (request, response) => {
@@ -39,7 +42,28 @@ app.get('/api/v1/tossups', (request, response) => {
       response.status(500).json({ error })
     })
 });
+
+app.get('/api/v1/tossups/:id', (request, response) => {
+  const { id } = request.params 
+  database('tossups').select(id)
+    .then(tossup => {
+      response.status(200).json(tossup)
+    })
+    .catch(error => {
+      response.status(500).json(error)
+    })
+})
   
+// Two following get requests were for deploying to heroku
+
+app.get('/', (request, response) => {
+  response.status(200).json('Hello World');
+});
+
+app.get('/favicon.ico', (request, response) => {
+  response.status(200).json('Hello World');
+});
+
 app.post('/api/v1/categories', (request, response) => {
   const category = request.body
   for(let requiredParameter of ['name']) {
