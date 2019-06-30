@@ -24,9 +24,13 @@ app.get('/api/v1/categories', (request, response) => {
 
 app.get('/api/v1/categories/:id', (request, response) => {
   const { id } = request.params 
-  database('categories').select(id)
+  database('categories').where({id}).select()
     .then(category => {
-      response.status(200).json(category)
+      if(category.length) {
+        response.status(200).json(category)
+      } else {
+        response.status(404).json({ error: 'A category with that id was not found'})
+      }
     })
     .catch(error => {
       response.status(500).json(error)
@@ -45,9 +49,13 @@ app.get('/api/v1/tossups', (request, response) => {
 
 app.get('/api/v1/tossups/:id', (request, response) => {
   const { id } = request.params 
-  database('tossups').select(id)
+  database('tossups').where({id}).select()
     .then(tossup => {
-      response.status(200).json(tossup)
+      if(tossup.length) {
+        response.status(200).json(tossup)
+      } else {
+        response.status(404).json({ error: 'A tossup with that id was not found'})
+      }
     })
     .catch(error => {
       response.status(500).json(error)
