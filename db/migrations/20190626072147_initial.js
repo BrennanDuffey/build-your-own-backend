@@ -13,7 +13,9 @@ exports.up = function(knex, Promise) {
       table.string('answer', 1000);
       table.integer('category_id').unsigned()
       table.foreign('category_id')
-        .references('categories');
+        .references('categories.id')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
       table.timestamps(true, true);
     })
   ])

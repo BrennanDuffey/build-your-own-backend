@@ -24,12 +24,12 @@ app.get('/api/v1/categories', (request, response) => {
 
 app.get('/api/v1/categories/:id', (request, response) => {
   const { id } = request.params 
-  database('categories').where({id}).select()
+  database('categories').where({ id }).select()
     .then(category => {
       if(category.length) {
         response.status(200).json(category)
       } else {
-        response.status(404).json({ error: 'A category with that id was not found'})
+        response.status(404).json({ error: `A category with id of ${id} was not found`})
       }
     })
     .catch(error => {
@@ -49,12 +49,12 @@ app.get('/api/v1/tossups', (request, response) => {
 
 app.get('/api/v1/tossups/:id', (request, response) => {
   const { id } = request.params 
-  database('tossups').where({id}).select()
+  database('tossups').where({ id }).select()
     .then(tossup => {
       if(tossup.length) {
         response.status(200).json(tossup)
       } else {
-        response.status(404).json({ error: 'A tossup with that id was not found'})
+        response.status(404).json({ error: `A tossup with id of ${id} was not found`})
       }
     })
     .catch(error => {
@@ -112,5 +112,36 @@ app.post('/api/v1/tossups', (request, response) => {
     .catch(error => {
       response.status(500).json({ error })
     }))
+});
+
+app.delete('/api/v1/categories/:id', (request, response) => {
+  const { id } = request.params
+  database('categories').where({ id }).del()
+    .then(deleteCount => {
+      if(deleteCount) {
+        response.sendStatus(204)
+      } else {
+        response.status(404).json({ error: `No categories with id of ${id} found`})
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+});
+
+app.delete('/api/v1/tossups/:id', (request, response) => {
+  const { id } = request.params
+  database('tossups').where({ id }).del()
+    .then(deleteCount => {
+      console.log(deleteCount)
+      if(deleteCount) {
+        response.sendStatus(204)
+      } else {
+        response.status(404).json({ error: `No tossups with id of ${id} found`})
+      }
+    })
+    .catch(erro => {
+      response.status(500).json({ error })
+    })
 });
 
