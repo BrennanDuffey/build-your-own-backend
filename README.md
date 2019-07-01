@@ -30,7 +30,7 @@ nodemon server.js
 ## Route Information
 
 ``` GET /api/v1/tossups ```
-### Response
+#### Response
 
 ``` Status: 200 OK
 [
@@ -62,7 +62,7 @@ nodemon server.js
 ```
 
 ``` GET /api/v1/categories ```
-### Response
+#### Response
 ```
 Status 200 OK
 [
@@ -91,5 +91,76 @@ Status 200 OK
         "updated_at": "2019-06-30T23:50:26.632Z"
     }
 ]
+```
 
 ``` GET /api/v1/tossups/:id```
+Where the id is the number of the primary key for the tossup being queried
+#### Responses
+Id of 27 sent
+``` 
+Status Code 200 OK 
+{
+    "id": 27,
+    "question": " Joseph Koch decorated four rooms devoted to this author in the Villa Massimi. A character created bythis author bites his own fingers as he's embraced by some naked youth in a sculpture by Jean-BaptisteCarpeaux. He's not FranÃ§ois Villon, but this author provided the source material for a sculpture of anelderly former model who stares at the ground titled The Old Courtesan, and for the Atlas-like man in thesculpture (*) I Am Beautiful. A man bites the bow of a ship as this author, wearing a red hood, recoils in horror inan 1822 painting by Eugene Delacroix titled for his \"barque.\" In a sculpture inspired by this author, a man holds hishand to his chin in a thinking pose. For 10 points, name this author whose work inspired Rodin's The Gates of Hell.",
+    "answer": " Dante Alighieri [or Durante degli Alighieri]",
+    "category_id": 13,
+    "created_at": "2019-06-30T23:50:26.661Z",
+    "updated_at": "2019-06-30T23:50:26.661Z"
+}
+``` 
+or with and ID of 112
+```
+Status Code 404
+{
+    "error": "A tossup with id of 112 was not found"
+}
+```
+
+``` GET /api/v1/categories/:id```
+#### Responses
+Sent with parameter of 10
+``` 
+Status Code 200 OK
+{
+    "id": 10,
+    "name": "World History",
+    "created_at": "2019-06-30T23:50:26.636Z",
+    "updated_at": "2019-06-30T23:50:26.636Z"
+}
+```
+Sent with parameter of 100
+```
+Status Code 404
+{
+    "error": "A category with id of 100 was not found"
+}
+```
+
+```POST /api/v1/tossups```
+Body must contain 'question' <String>, 'answer' <String>, and category <String> the response.
+
+#### Response
+``` 
+Status code 201 
+{
+    "id": 54
+}
+```
+
+```POST /api/v1/categories```
+Body must contain 'name' <String>.
+
+#### Response
+``` 
+Status code 201 
+{
+    "name": " Literature",
+    "id": 28
+}
+```
+
+``` DELETE /api/v1/tossups/:id```
+Parameter provided is the primary key of the row to be deleted
+
+#### Response
+``` Status Code 204 with no body```
