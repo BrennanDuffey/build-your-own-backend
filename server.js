@@ -206,7 +206,7 @@ app.delete('/api/v1/tossups/:id', (request, response) => {
         response.status(404).json({ error: `No tossups with id of ${id} found`})
       }
     })
-    .catch(erro => {
+    .catch(error => {
       response.status(500).json({ error })
     })
 });
